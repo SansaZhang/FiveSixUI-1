@@ -14,7 +14,8 @@ import { findDOMNode } from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import lazyCache from 'react-lazy-cache';
 import $ from 'jquery';
-import './styles.less';
+import CSSModules from 'react-css-modules'; 
+import styles from './styles.less';
 /**
  * 组件属性说明
  *
@@ -534,4 +535,4 @@ Select.defaultProps = {
   width: '150px',
 };
 
-export default Select;
+export default CSSModules(Select, styles);

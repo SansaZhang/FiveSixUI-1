@@ -6,7 +6,8 @@
  */
 import React, { PropTypes } from 'react';
 import { Modal, Button } from 'antd';
-import './styles.less';
+import CSSModules from 'react-css-modules'; 
+import styles from './styles.less';
 
 /**
  * 组件属性申明
@@ -118,7 +119,7 @@ class ImageModal extends React.Component {
     const { width, deg } = this.state;
     const { src, onClose, show } = this.props;
     return (
-      <div className="wl-imagemodal-wrapper">
+      <div styleName="wl-imagemodal-wrapper">
         { show ? (
           <Modal
             visible={show}
@@ -155,4 +156,4 @@ ImageModal.propTypes = propTypes;
 ImageModal.defaultProps = {
   show: false,
 };
-export default ImageModal;
+export default CSSModules(ImageModal, styles);

@@ -3,7 +3,8 @@ import React, { PropTypes } from 'react';
 import { Table, Dropdown, Icon, Menu } from 'antd';
 import _ from 'lodash';
 import ReactDOM from 'react-dom';
-import './styles.less';
+import CSSModules from 'react-css-modules'; 
+import styles from './styles.less';
 
 /**
  * 组件属性说明
@@ -142,7 +143,7 @@ class DataTable extends React.Component {
               let newcol = { ...col };
               if (this.initConfig.align) {
                 newcol = { ...newcol, ...col,
-                  className: 'column',
+                  styleName: 'column',
                 };
               }
               if (col.sort && !col.sorter) {
@@ -331,7 +332,7 @@ class DataTable extends React.Component {
     const { data, height, current, loading } = this.state;
     const { rowSelection, expandedRowRender } = this.props;
     return (
-      <div className="datatable-module" style={{ height: this.initConfig.height === 'auto' ? 'auto' : height.table }}>
+      <div className="datatable-module" styleName="datatable-module" style={{ height: this.initConfig.height === 'auto' ? 'auto' : height.table }}>
         <Table
           ref={(c) => {
             this.table = c;
@@ -359,4 +360,4 @@ class DataTable extends React.Component {
 
 DataTable.propTypes = propTypes;
 
-export default DataTable;
+export default CSSModules(DataTable, styles);

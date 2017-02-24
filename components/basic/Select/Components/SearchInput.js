@@ -37,11 +37,11 @@ class SearchInput extends Component {
          * 点击事件，动画效果 impure
          */
     this.handleClick = () => {
-      findDOMNode(this.button).className = findDOMNode(this.button).className.replace(' wl-myBtn-clicked', '');
-      this.clickedTimeout = setTimeout(() => { findDOMNode(this.button).className += ' wl-myBtn-clicked'; }, 10);
+      findDOMNode(this.button).styleName = findDOMNode(this.button).styleName.replace(' wl-myBtn-clicked', '');
+      this.clickedTimeout = setTimeout(() => { findDOMNode(this.button).styleName += ' wl-myBtn-clicked'; }, 10);
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
-        findDOMNode(this.button).className = findDOMNode(this.button).className.replace(' wl-myBtn-clicked', '');
+        findDOMNode(this.button).styleName = findDOMNode(this.button).styleName.replace(' wl-myBtn-clicked', '');
       }, 500);
     };
         /**
@@ -73,32 +73,32 @@ class SearchInput extends Component {
   }
   render() {
     return (
-      <div className="wl-search-input-wrapper" style={{ marginTop: '1px', marginBottom: '2px', width: this.props.width }}>
-        <span className="wl-input-group">
-          <div className="wl-select">
-            <div className={`wl-select-selection wl-select-selection--search${this.state.focus ? ' wl-select-selection-focus' : ''}`}>
-              <div className="wl-select-selection__rendered--search">
-                <div className="wl-select-selection__placeholder" style={{ display: this.state.focus || this.props.value ? 'none' : '' }}>
+      <div styleName="wl-search-input-wrapper" style={{ marginTop: '1px', marginBottom: '2px', width: this.props.width }}>
+        <span styleName="wl-input-group">
+          <div styleName="wl-select">
+            <div styleName={`wl-select-selection wl-select-selection--search${this.state.focus ? ' wl-select-selection-focus' : ''}`}>
+              <div styleName="wl-select-selection__rendered--search">
+                <div styleName="wl-select-selection__placeholder" style={{ display: this.state.focus || this.props.value ? 'none' : '' }}>
                     {'search..'}
                 </div>
                 <ul style={{ marginBottom: '0px' }}>
-                  <li className="wl-select-search--inline">
-                    <div className="wl-select-search__field__wrap">
-                      <input className="wl-select-search__field" value={this.props.value} onChange={this.props.onChange} onFocus={this.handleFocus} onBlur={this.handleBlur} />
-                      <span className="wl-select-search__field__mirror" />
+                  <li styleName="wl-select-search--inline">
+                    <div styleName="wl-select-search__field__wrap">
+                      <input styleName="wl-select-search__field" value={this.props.value} onChange={this.props.onChange} onFocus={this.handleFocus} onBlur={this.handleBlur} />
+                      <span styleName="wl-select-search__field__mirror" />
                     </div>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
-          <div className="wl-input-group-wrap">
+          <div styleName="wl-input-group-wrap">
             <button
               ref={(c) => {
                 this.button = c;
-              }} type="button" onClick={this.handleClick} onMouseUp={this.handleMouseUp} className="wl-myBtn wl-search-btn"
+              }} type="button" onClick={this.handleClick} onMouseUp={this.handleMouseUp} styleName="wl-myBtn wl-search-btn"
             >
-              <i className="wl-icon wl-icon-search">
+              <i styleName="wl-icon wl-icon-search">
               </i>
             </button>
           </div>

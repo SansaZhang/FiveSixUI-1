@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
-import './styles.less';
+import CSSModules from 'react-css-modules'; 
+import styles from './styles.less';
 import { Form, TimePicker, Button, Select, InputNumber, message } from 'antd';
 import Utils from './utils';
 import { createOptionsFromArray } from 'utils/utils';
@@ -23,7 +24,7 @@ const FormItem = Form.Item;
 /**
  * 完整组件
  */
-export default class MultiTimePeriod extends React.Component {
+class MultiTimePeriod extends React.Component {
 
     constructor(props) {
         super(props);
@@ -198,7 +199,7 @@ export default class MultiTimePeriod extends React.Component {
             <div>
                 { timeArr.map((time, index) =>
                     <div
-                        className = "period-container"
+                        styleName = "period-container"
                         key = { index }
                         >
                         {
@@ -252,7 +253,7 @@ export default class MultiTimePeriod extends React.Component {
                         {
                             index === 0
                             ? <Button
-                                    className = "period-button"
+                                    styleName = "period-button"
                                     type = "primary"
                                     size = "small"
                                     shape = "circle"
@@ -260,7 +261,7 @@ export default class MultiTimePeriod extends React.Component {
                                     onClick = {this.addPeriod.bind(this)}>
                                 </Button>
                                 : <Button
-                                    className = "period-button"
+                                    styleName = "period-button"
                                     type = "primary"
                                     size = "small"
                                     shape = "circle"
@@ -271,7 +272,7 @@ export default class MultiTimePeriod extends React.Component {
                         {
                             index === 0 && (this.props.region || this.props.price) && timeArr.length == 1 ?
                                 <Button
-                                    className = "period-button"
+                                    styleName = "period-button"
                                     type = "primary"
                                     size = "small"
                                     shape = "circle"
@@ -284,7 +285,7 @@ export default class MultiTimePeriod extends React.Component {
                 )}
                 {!timeArr.length ?
                     <Button
-                        className = "period-button"
+                        styleName = "period-button"
                         type = "primary"
                         size = "small"
                         shape = "circle"
@@ -297,3 +298,5 @@ export default class MultiTimePeriod extends React.Component {
         );
     }
 }
+
+export default CSSModules(MultiTimePeriod, styles);

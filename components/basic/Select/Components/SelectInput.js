@@ -31,18 +31,18 @@ const propTypes = {
  */
 export const SelectInput = (props) => (
   <div
-    className={`wl-select${props.disabled ? ' wl-select-disabled' : ''}${props.open && !props.disabled ? ' wl-select-open' : ''}`}
+    styleName={`wl-select${props.disabled ? ' wl-select-disabled' : ''}${props.open && !props.disabled ? ' wl-select-open' : ''}`}
     style={{ width: props.width }}
     onClick={props.onClick}
   >
-    <div className="wl-select-selection wl-select-selection--single">
-      <div className="wl-select-selection__rendered">
-        <div className="wl-select-selection-selected-value">
+    <div styleName="wl-select-selection wl-select-selection--single">
+      <div styleName="wl-select-selection__rendered">
+        <div styleName="wl-select-selection-selected-value">
             {props.value}
         </div>
       </div>
-      <span className="wl-select-selection__clear" onClick={props.handleClear} style={{ display: props.handleClear ? '' : 'none' }} />
-      <span className="wl-select-arrow">
+      <span styleName="wl-select-selection__clear" onClick={props.handleClear} style={{ display: props.handleClear ? '' : 'none' }} />
+      <span styleName="wl-select-arrow">
         <b />
       </span>
     </div>

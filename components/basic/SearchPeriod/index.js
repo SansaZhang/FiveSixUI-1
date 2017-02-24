@@ -11,7 +11,8 @@ import moment from 'moment';
 import { Select, Radio, DatePicker, notification } from 'antd';
 import utils from './utils';
 import { DEFAULT_DATE_FORMAT, DEFAULT_OPTIONS, DATE_TYPE, DEFAULT_MAX_INTERVAL, PARAMS_MAP } from './constant';
-import './styles.less';
+import CSSModules from 'react-css-modules'; 
+import styles from './styles.less';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -60,7 +61,7 @@ const propTypes = {
  * @class SearchPeriod
  * @extends {React.Component}
  */
-export default class SearchPeriod extends React.Component {
+class SearchPeriod extends React.Component {
   static defaultProps = {
     options: DEFAULT_OPTIONS,
     dateFormat: DEFAULT_DATE_FORMAT,
@@ -312,6 +313,7 @@ export default class SearchPeriod extends React.Component {
       <div>
         { options.length === 1 && options[0] === 'customize' ? '' :
         <RadioGroup
+          styleName="wl-searchperiod-type"
           className="wl-searchperiod-type"
           size="large"
           defaultValue={defaultType || options[0]}
@@ -338,7 +340,7 @@ export default class SearchPeriod extends React.Component {
           onChange={this.changeRangeVal}
           disabledDate={disabledDate ? cur => this.disabledDate(cur) : cur => SearchPeriod.defaultDisabledDate(cur, options, moment().startOf('day'))}
         />
-        { removeDateTool ? <div className="wl-searchperiod-removedate" id="content">
+        { removeDateTool ? <div styleName="wl-searchperiod-removedate" id="content">
           <span>去除日期：</span>
           <Select
             multiple
@@ -355,3 +357,5 @@ export default class SearchPeriod extends React.Component {
     );
   }
 }
+
+export default CSSModules(SearchPeriod, styles);

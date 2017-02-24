@@ -7,7 +7,8 @@
 */
 import React, { PropTypes } from 'react';
 import { InputNumber, Input, Icon, Button } from 'antd';
-import './styles.less';
+import CSSModules from 'react-css-modules'; 
+import styles from './styles.less';
 
 /**
  * 组件属性申明
@@ -42,7 +43,7 @@ const propTypes = {
  * @class SerialInput
  * @extends {React.Component}
  */
-export default class SerialInput extends React.Component {
+class SerialInput extends React.Component {
   static defaultProps = {
     min: '-Infinity',
     max: 'Infinity',
@@ -157,10 +158,10 @@ export default class SerialInput extends React.Component {
     const { serials } = this.state;
     const { min, max, step, disabled } = this.props;
 
-    return (<div className="wl-serialinput-con">
+    return (<div styleName="wl-serialinput-con" className="wl-serialinput-con">
       { serials.map((item, index, arr) => {
         if (index === 0) {
-          return (<span key={index} className="wl-serialinput-input">
+          return (<span key={index} styleName="wl-serialinput-input">
             {
               item === '-Infinity' ? <Input value={item} disabled /> : <InputNumber
                 value={item}
@@ -177,7 +178,7 @@ export default class SerialInput extends React.Component {
                 onClick={() => this.revertInput(index, item)}
               /> : ''
             }
-            <span className="wl-serialinput-line">
+            <span styleName="wl-serialinput-line">
               <Button
                 type="ghost"
                 shape="circle"
@@ -188,7 +189,7 @@ export default class SerialInput extends React.Component {
             </span>
           </span>);
         } else if (index === arr.length - 1) {
-          return (<span key={index} className="wl-serialinput-input">
+          return (<span key={index} styleName="wl-serialinput-input">
             {
               item === 'Infinity' ? <Input value={item} disabled /> : <InputNumber
                 value={item}
@@ -207,7 +208,7 @@ export default class SerialInput extends React.Component {
             }
           </span>);
         }
-        return (<span key={index} className="wl-serialinput-input">
+        return (<span key={index} styleName="wl-serialinput-input">
           <InputNumber
             value={item}
             step={step}
@@ -223,7 +224,7 @@ export default class SerialInput extends React.Component {
               onClick={() => this.deleteInput(index)}
             /> : ''
           }
-          <span className="wl-serialinput-line">
+          <span styleName="wl-serialinput-line">
             <Button
               type="ghost"
               shape="circle"
@@ -237,3 +238,4 @@ export default class SerialInput extends React.Component {
     </div>);
   }
 }
+export default CSSModules(SerialInput, styles);

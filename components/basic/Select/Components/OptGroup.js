@@ -23,11 +23,11 @@ const propTypes = {
  * @extends {React.Component}
  */
 export const OptGroup = (props) => (
-  <li className="wl-select-dropdown-menu-item-group">
-    <div className="wl-select-dropdown-menu-item-group-title">
+  <li styleName="wl-select-dropdown-menu-item-group">
+    <div styleName="wl-select-dropdown-menu-item-group-title">
               {props.label}
     </div>
-    <ul className="wl-select-dropdown-menu-item-group-list">
+    <ul styleName="wl-select-dropdown-menu-item-group-list">
               {props.children}
     </ul>
   </li>

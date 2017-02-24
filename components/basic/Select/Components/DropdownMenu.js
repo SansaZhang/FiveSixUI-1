@@ -64,12 +64,12 @@ class DropdownMenu extends Component {
   render() {
     return (
       <div
-        className={`wl-select-dropdown${this.props.open ? ' wl-fadeInDown' : this.initClassName || ' wl-fadeOutUp'}`}
+        styleName={`wl-select-dropdown${this.props.open ? ' wl-fadeInDown' : this.initClassName || ' wl-fadeOutUp'}`}
         style={{ left: 0, top: 34, width: this.props.width }}
       >
           {React.Children.toArray(this.props.children).slice(0, this.getChildren(this.props))}
         <div style={{ overflowY: 'auto', overflowX: 'hidden' }}>
-          <ul className="wl-select-dropdown-menu" style={{ maxHeight: this.props.maxHeight }}>
+          <ul styleName="wl-select-dropdown-menu" style={{ maxHeight: this.props.maxHeight }}>
                 {this.props.children ? React.Children.toArray(this.props.children).slice(this.getChildren(this.props))
                   : <Option disabled label="No Data" />
             }

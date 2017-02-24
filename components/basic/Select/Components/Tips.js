@@ -38,10 +38,10 @@ class Tips extends Component {
   }
   render() {
     return (
-      <div className={`wl-tooltip wl-tooltip-placement-right${this.props.show ? ' wl-fadeInDown' : this.initClassName || ' wl-fadeOutUp'}`} style={this.props.style}>
-        <div className="wl-tooltip-content">
-          <div className="wl-tooltip-arrow" />
-          <div className="wl-tooltip-inner">
+      <div styleName={`wl-tooltip wl-tooltip-placement-right${this.props.show ? ' wl-fadeInDown' : this.initClassName || ' wl-fadeOutUp'}`} style={this.props.style}>
+        <div styleName="wl-tooltip-content">
+          <div styleName="wl-tooltip-arrow" />
+          <div styleName="wl-tooltip-inner">
                 {this.props.text}
           </div>
         </div>

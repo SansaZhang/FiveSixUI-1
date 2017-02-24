@@ -118,6 +118,8 @@
     "lesshint": "lesshint components -r scripts/lesshint-report.js",
     "demo": "cd demo && node ./index.js --harmony",
     "init": "rm -rf node_modules && cnpm i && cd demo && rm -rf node_modules  && cnpm i",
-    "pre-publish": "gulp clean && gulp publish"
+    "pre-publish": "gulp clean && gulp publish",
+    "build": "webpack",
+    "clean": "rm -rf dist"
   }
 }

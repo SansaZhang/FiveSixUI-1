@@ -8,8 +8,8 @@
  */
 import React, { PropTypes } from 'react';
 import { Breadcrumb } from 'antd';
-
-import './styles.less';
+import CSSModules from 'react-css-modules'; 
+import styles from './styles.less';
 /**
  * 组件属性说明
  * @property {array} data 面包屑数组(必填) defaultValue: [{title: '骑士管理', link: ''},{title: '装备管理'}]
@@ -50,4 +50,5 @@ class Crumb extends React.Component {
   }
 }
 Crumb.propTypes = propTypes;
-export default Crumb;
+
+export default CSSModules(Crumb, styles);

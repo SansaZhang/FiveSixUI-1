@@ -7,7 +7,8 @@
 *
 */
 import React, { PropTypes } from 'react';
-import './styles.less';
+import CSSModules from 'react-css-modules'; 
+import styles from './styles.less';
 
 /**
  * 组件属性申明
@@ -31,7 +32,7 @@ const propTypes = {
  * @class Show
  * @extends {React.Component}
  */
-export default class Show extends React.Component {
+class Show extends React.Component {
   static defaultProps = {
     isShow: true,
     isDelDom: false,
@@ -70,9 +71,10 @@ export default class Show extends React.Component {
      */
     return (<div
       style={{ display: Show.getDisplay(isShow, isInline) }}
-      className="wl-show-animated wl-show-slideInUp"
+      styleName="wl-show-animated wl-show-slideInUp"
     >
       { (isDelDom && isShow === false) ? '' : this.props.children }
     </div>);
   }
 }
+export default CSSModules(Show, styles,{allowMultiple: true});

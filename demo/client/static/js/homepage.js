@@ -151,6 +151,9 @@ export default class Homepage extends Component {
               value={this.state.searchinputValue}
               key="searchinput"
             />
+            <SearchPeriod
+            />
+            <ImageModal show={false}/>
             </div>
         )
 

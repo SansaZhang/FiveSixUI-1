@@ -78,7 +78,7 @@ class Option extends Component {
       onClick={this.props.disabled ? null : this.handleClick}
       onMouseEnter={this.handleMouseEnter}
       onMouseLeave={this.handleMouseLeave}
-      className={`wl-select-dropdown-menu-item${this.props.disabled ? ' wl-select-dropdown-menu-item-disabled' : ''}${this.props.selected ? ' wl-select-dropdown-menu-item-selected' : ''}`}
+      styleName={`wl-select-dropdown-menu-item${this.props.disabled ? ' wl-select-dropdown-menu-item-disabled' : ''}${this.props.selected ? ' wl-select-dropdown-menu-item-selected' : ''}`}
       ref={
               c => {
                 this.option = c;
