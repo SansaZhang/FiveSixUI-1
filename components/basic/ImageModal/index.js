@@ -111,7 +111,7 @@ class ImageModal extends React.Component {
   }
 
   handleClose(onClose) {
-    onClose && onClose(this.props.src);
+    onClose && onClose();
   }
 
   render() {
