@@ -4,7 +4,9 @@
  * @version 0.0.1
  */
 import React, { PropTypes } from 'react';
-import './styles.less';
+import styles from './styles.less';
+import CSSModules from 'react-css-modules';
+
 
 /**
  * 组件属性申明
@@ -31,7 +33,7 @@ const propTypes = {
  * @extends {React.Component}
  * 
  */
-export default class Tag extends React.Component {
+class Tag extends React.Component {
   /**
   * Creates an instance of Tag.
   * 
@@ -83,15 +85,15 @@ export default class Tag extends React.Component {
     return (
       <div 
         data-value={value}
-        className={selected ? 'wl-tag wl-tag-selected' : 'wl-tag'}
+        styleName={selected ? 'wl-tag wl-tag-selected' : 'wl-tag'}
         onClick={e => this.handlerClick(e, value)}
       >
-        <span className="wl-tag-text">
+        <span styleName="wl-tag-text">
           {this.props.children}
         </span>
         {typeof closable === 'undefined' || closable === true ?  
           <span 
-            className="wl-tag-close"
+            styleName="wl-tag-close"
             onClick={e => this.handlerClose(e, value)} 
           /> : ''
         }
@@ -99,3 +101,5 @@ export default class Tag extends React.Component {
     );
   }
 }
+
+export default CSSModules(Tag, styles);

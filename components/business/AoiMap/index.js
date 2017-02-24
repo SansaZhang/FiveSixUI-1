@@ -6,10 +6,12 @@
 * @version 0.0.1
 *
 */
+import CSSModules from 'react-css-modules';
 import React, { Component, PropTypes } from 'react';
 import { Button, Dropdown, Menu, Icon } from 'antd';
 import { MapCircle, getLonlat } from './mapcircle';
-import './styles.less';
+import styles from './styles.less';
+
 
 /**
  * 组件属性申明
@@ -67,7 +69,7 @@ const propTypes = {
  * @class AoiMap
  * @extends {React.Component}
  */
-export default class AoiMap extends Component {
+class AoiMap extends Component {
   static propTypes = propTypes;
 
   static defaultProps = {
@@ -343,8 +345,8 @@ export default class AoiMap extends Component {
       </Menu>
     );
 
-    return (<div className={'wl-aoimap-con ' + className}>
-      <div className="wl-aoimap-toolbar">
+    return (<div styleName={'wl-aoimap-con ' + className}>
+      <div styleName="wl-aoimap-toolbar">
         {regionTools.indexOf('add') !== -1 ?
           <Button
             icon="plus"
@@ -401,3 +403,5 @@ export default class AoiMap extends Component {
     </div>);
   }
 }
+
+export default CSSModules(AoiMap, styles);

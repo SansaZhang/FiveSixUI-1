@@ -65,7 +65,7 @@ class DropdownMenu extends Component {
     return (
       <div
         styleName={`wl-select-dropdown${this.props.open ? ' wl-fadeInDown' : this.initClassName || ' wl-fadeOutUp'}`}
-        style={{ left: 0, top: 34, width: this.props.width }}
+        style={{width: this.props.width }}
       >
           {React.Children.toArray(this.props.children).slice(0, this.getChildren(this.props))}
         <div style={{ overflowY: 'auto', overflowX: 'hidden' }}>

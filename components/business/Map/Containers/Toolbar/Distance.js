@@ -1,6 +1,8 @@
+import CSSModules from 'react-css-modules';
 import React, {Component, PropTypes} from 'react';
 import {Button} from 'antd';
-import './style.less';
+import styles from './styles.less';
+
 let myDis;
 class Distance extends Component {
   componentDidMount() {
@@ -30,4 +32,4 @@ Distance.propTypes = {
 
 };
 
-export default Distance;
+export default CSSModules(Distance, styles);
