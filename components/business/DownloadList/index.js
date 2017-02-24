@@ -67,26 +67,26 @@ class DownloadList extends React.Component {
         title="下载列表"
         visible={show}
         footer={null}
-        className="downloadList-modal"
+        styleName="downloadList-modal"
         width={800}
         onCancel={() => { onCancel && onCancel(false); }}
       >
         <ul>
           { data && data.length > 0 ?
             data.map((item, index) => (
-              <li key={index} className={'downloadList-item-' + statusMap[item.status][0]}>
+              <li key={index} styleName={'downloadList-item-' + statusMap[item.status][0]}>
                 <dl>
                   <dt>小度驿站-<span>{item.name}</span>&nbsp;【{moment.unix(item.create_time).format('YYYY-MM-DD HH:mm:ss')}】</dt>
-                  <dd className="downloadList-status">
+                  <dd styleName="downloadList-status">
                   状态：{ statusMap[item.status][1] }
                   </dd>
-                  <dd className="downloadList-operate">
+                  <dd styleName="downloadList-operate">
                     { this.getOperations(item) }
                   </dd>
                 </dl>
               </li>
             )) : (
-              <div className="downloadList-no-download-record-panel">
+              <div styleName="downloadList-no-download-record-panel">
                 您二十四小时内无下载记录
               </div>)
           }

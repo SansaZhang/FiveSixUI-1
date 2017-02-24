@@ -345,8 +345,8 @@ class AoiMap extends Component {
       </Menu>
     );
 
-    return (<div className={'wl-aoimap-con ' + className}>
-      <div className="wl-aoimap-toolbar">
+    return (<div styleName={'wl-aoimap-con ' + className}>
+      <div styleName="wl-aoimap-toolbar">
         {regionTools.indexOf('add') !== -1 ?
           <Button
             icon="plus"

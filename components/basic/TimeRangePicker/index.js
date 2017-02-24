@@ -104,9 +104,9 @@ class TimeRangePicker extends React.Component {
     this.end = value ? value.end : moment();
 
     return (
-      <div className="wl-timerangepicker-wrapper">
+      <div styleName="wl-timerangepicker-wrapper">
         <TimePicker
-          className="wl-timerangepicker-start-time"
+          styleName="wl-timerangepicker-start-time"
           disabledHours={ordered ? () => this.disabledHours(null, this.end) : () => []}
           disabledMinutes={ordered ? hour => this.disabledMinutes(hour, null, this.end) : () => []}
           disabledSeconds={ordered ? (hour, minute) => this.disabledSeconds(hour, minute, null, this.end) : () => []}
@@ -116,7 +116,7 @@ class TimeRangePicker extends React.Component {
         />
         {separator || ' 至 '}
         <TimePicker
-          className="wl-timerangepicker-end-time"
+          styleName="wl-timerangepicker-end-time"
           value={this.end}
           disabledHours={ordered ? () => this.disabledHours(this.start) : () => []}
           disabledMinutes={ordered ? hour => this.disabledMinutes(hour, this.start) : () => []}

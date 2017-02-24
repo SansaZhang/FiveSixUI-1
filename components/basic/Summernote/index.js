@@ -136,7 +136,7 @@ class Summernote extends React.Component {
   }
 
   render() {
-    return (<div className="wl-summernote-con">
+    return (<div styleName="wl-summernote-con">
       <input ref={(ref) => { this['summernote' + this.props.name] = ref; }} />
     </div>);
   }

@@ -32,7 +32,7 @@ const propTypes = {
  */
 function TagsField({ tags, onClickTag, onCloseTag, selected }) {
   return (
-    <div className="tags-field">
+    <div styleName="tags-field">
       { tags.map(item =>
         <Tag
           key={item.value}

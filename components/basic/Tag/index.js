@@ -85,15 +85,15 @@ class Tag extends React.Component {
     return (
       <div 
         data-value={value}
-        className={selected ? 'wl-tag wl-tag-selected' : 'wl-tag'}
+        styleName={selected ? 'wl-tag wl-tag-selected' : 'wl-tag'}
         onClick={e => this.handlerClick(e, value)}
       >
-        <span className="wl-tag-text">
+        <span styleName="wl-tag-text">
           {this.props.children}
         </span>
         {typeof closable === 'undefined' || closable === true ?  
           <span 
-            className="wl-tag-close"
+            styleName="wl-tag-close"
             onClick={e => this.handlerClose(e, value)} 
           /> : ''
         }
