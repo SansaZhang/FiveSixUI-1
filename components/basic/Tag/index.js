@@ -4,7 +4,9 @@
  * @version 0.0.1
  */
 import React, { PropTypes } from 'react';
-import './styles.less';
+import styles from './styles.less';
+import CSSModules from 'react-css-modules';
+
 
 /**
  * 组件属性申明
@@ -31,7 +33,7 @@ const propTypes = {
  * @extends {React.Component}
  * 
  */
-export default class Tag extends React.Component {
+class Tag extends React.Component {
   /**
   * Creates an instance of Tag.
   * 
@@ -99,3 +101,5 @@ export default class Tag extends React.Component {
     );
   }
 }
+
+export default CSSModules(Tag, styles);

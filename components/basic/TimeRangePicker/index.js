@@ -6,10 +6,12 @@
  * @version 0.0.1
  *
  */
+import CSSModules from 'react-css-modules';
 import React, { PropTypes } from 'react';
 import { TimePicker } from 'antd';
 import moment from 'moment';
-import './styles.less';
+import styles from './styles.less';
+
 
 /**
  * 组件属性申明
@@ -127,4 +129,4 @@ class TimeRangePicker extends React.Component {
   }
 }
 TimeRangePicker.propTypes = propTypes;
-export default TimeRangePicker;
+export default CSSModules(TimeRangePicker, styles);

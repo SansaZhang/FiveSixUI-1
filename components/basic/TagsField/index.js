@@ -4,11 +4,10 @@
  * @author lichun <lichun@iwaimai.baidu.com>
  * @version 0.0.1
  */
+import CSSModules from 'react-css-modules';
 import React, { PropTypes } from 'react';
 import Tag from '../Tag';
-
-import './styles.less';
-
+import styles from './styles.less';
 /**
  * 组件属性申明
  *
@@ -49,4 +48,4 @@ function TagsField({ tags, onClickTag, onCloseTag, selected }) {
   );
 }
 TagsField.propTypes = propTypes;
-export default TagsField;
+export default CSSModules(TagsField, styles);

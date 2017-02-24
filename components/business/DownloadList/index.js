@@ -6,10 +6,12 @@
  * @version 0.0.1
  *
  */
+import CSSModules from 'react-css-modules';
 import React, { PropTypes } from 'react';
 import { Modal, Spin } from 'antd';
 import moment from 'moment';
-import './styles.less';
+import styles from './styles.less';
+
 
 /**
  * 组件属性申明
@@ -37,7 +39,7 @@ const statusMap = {
  * @class DownloadList
  * @extends {React.Component}
  */
-export default class DownloadList extends React.Component {
+class DownloadList extends React.Component {
   /**
    * 组件属性申明
    *
@@ -93,3 +95,4 @@ export default class DownloadList extends React.Component {
     );
   }
 }
+export default CSSModules(DownloadList, styles);

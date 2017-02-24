@@ -6,9 +6,10 @@
  * @version 0.0.1
  *
  */
+import CSSModules from 'react-css-modules';
 import React, { PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
-import './styles.less';
+import styles from './styles.less';
 
 require('bootstrap/js/modal.js');
 require('bootstrap/js/dropdown.js');
@@ -55,7 +56,7 @@ const propTypes = {
  * @class Summernote
  * @extends {React.Component}
  */
-export default class Summernote extends React.Component {
+class Summernote extends React.Component {
   static defaultProps = {
     name: 'summernote',
     value: '',
@@ -140,3 +141,5 @@ export default class Summernote extends React.Component {
     </div>);
   }
 }
+
+export default CSSModules(Summernote, styles);
