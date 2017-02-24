@@ -13,6 +13,8 @@ var concatCss = require('gulp-concat-css');
 var cleanCss = require('gulp-clean-css');
 var rename = require('gulp-rename');
 
+process.env.NODE_ENV = 'production';
+
 gulp.task('default', ['clean'], function() {
   gulp.start('publish');
 });
