@@ -192,9 +192,9 @@ class Select extends Component {
         data.forEach(
                      item => { ret = ret.concat(item.children); }
                 );
-        return ret[_.findIndex(ret, (v) => v.value === value)] ? ret[_.findIndex(ret, (v) => v.value === value)].text : '';
+        return ret[_.findIndex(ret, (v) => v.value === value)] ? ret[_.findIndex(ret, (v) => v.value === value)].text : value;
       }
-      return data[_.findIndex(data, (v) => v.value === value)] ? data[_.findIndex(data, (v) => v.value === value)].text : '';
+      return data[_.findIndex(data, (v) => v.value === value)] ? data[_.findIndex(data, (v) => v.value === value)].text : value;
     };
         /**
          * 获取全部value pure
