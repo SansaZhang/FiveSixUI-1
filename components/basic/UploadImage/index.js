@@ -72,7 +72,7 @@ export default class UploadImage extends React.Component {
     const me = this;
     if (showSize && imgUrl) {
       const file = { ...this.state.fileList[0] };
-      $('<img src="' + imgUrl + '">').load(() => {
+      $('<img src="' + imgUrl + '">').load(function () {
         file.name = imgName + ' ' + this.width + ' X ' + this.height;
         me.setState({
           fileList: [file],
@@ -95,7 +95,7 @@ export default class UploadImage extends React.Component {
       const me = this;
       if (showSize && nextProps.imgUrl) {
         const file = { ...this.state.fileList[0] };
-        $('<img src="' + nextProps.imgUrl + '">').load(() => {
+        $('<img src="' + nextProps.imgUrl + '">').load(function () {
           file.name = nextProps.imgName + ' ' + this.width + ' X ' + this.height;
           file.url = nextProps.imgUrl;
           me.setState({
@@ -125,7 +125,7 @@ export default class UploadImage extends React.Component {
       if (showSize && url) {
         const file = { ...fileList[0] };
         const me = this;
-        $('<img src="' + url + '">').load(() => {
+        $('<img src="' + url + '">').load(function () {
           file.name = file.name + ' ' + this.width + ' X ' + this.height;
           me.setState({
             fileList: [file],
