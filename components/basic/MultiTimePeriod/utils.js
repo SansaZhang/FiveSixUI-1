@@ -14,38 +14,42 @@ Utils.getMTPeriodStr = (arr) => {
     return periodStr;
 };
 
-Utils.getMTPeriodArr = (str) => {
-    const defaultVal = [{
+Utils.getMTPeriodArr = function (str) {
+    var defaultVal = [{
         start: '',
         end: '',
         price: '',
         region: 0
     }];
-    
+
     if (!str) {
         return defaultVal;
     }
-
-    const periodArr = str.split(';');
-    let timeArr = [];
-    for(let i = 0; i < periodArr.length; i++) {
-        if(periodArr[i]) {
-            if(periodArr[i].length > 11) {
-                timeArr.push({
-                    start: periodArr[i].slice(0, 5),
-                    end: periodArr[i].slice(6, 11),
-                    price: periodArr[i].slice(12),
-                    region: periodArr[i].slice(12)
-                });
-            } else {
-                timeArr.push({
-                    start: periodArr[i].slice(0, 5),
-                    end: periodArr[i].slice(6, 11)
-                });
+    var end = Object.prototype.toString.call(str).length -1;
+    if (Object.prototype.toString.call(str).substring(8,end) == "String") {
+        var periodArr = str.split(';');
+        var timeArr = [];
+        for (var i = 0; i < periodArr.length; i++) {
+            if (periodArr[i]) {
+                if (periodArr[i].length > 11) {
+                    timeArr.push({
+                        start: periodArr[i].slice(0, 5),
+                        end: periodArr[i].slice(6, 11),
+                        price: periodArr[i].slice(12),
+                        region: periodArr[i].slice(12)
+                    });
+                } else {
+                    timeArr.push({
+                        start: periodArr[i].slice(0, 5),
+                        end: periodArr[i].slice(6, 11)
+                    });
+                }
             }
         }
+        return timeArr;
     }
-    return timeArr;
+    return str;
+    
 };
 
 Utils.getMTPeriodMinuteCount = (arr) => {

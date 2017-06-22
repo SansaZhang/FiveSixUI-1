@@ -6,17 +6,16 @@
 * @version 0.0.1
 *
 */
-import CSSModules from 'react-css-modules';
 import React, { Component, PropTypes } from 'react';
 import { Button, Dropdown, Menu, Icon } from 'antd';
-import { MapCircle, getLonlat } from './mapcircle';
-import styles from './styles.less';
-
+import { MapCircle, getMercator } from './mapcircle';
+import './styles.less';
 
 /**
  * 组件属性申明
  *
  * @property {string} className               组件样式类名                        defaultValue:''
+ * @property {string} className               组件地图容器的id                    defaultValue:'aoimap-id'
  * @property {object} mapStyle                地图样式                            defaultValue:{ height: '450px',  width: '100%' }
  * @property {object} center                  地图定位中心                        defaultValue:'北京市'
  * @property {array}  points                  多地点数组                          defaultValue:[]
@@ -37,6 +36,7 @@ import styles from './styles.less';
  */
 const propTypes = {
   className: PropTypes.string,
+  id: PropTypes.string,
   mapStyle: PropTypes.object,
   center: PropTypes.string,
   points: PropTypes.array,
@@ -69,11 +69,12 @@ const propTypes = {
  * @class AoiMap
  * @extends {React.Component}
  */
-class AoiMap extends Component {
+export default class AoiMap extends Component {
   static propTypes = propTypes;
 
   static defaultProps = {
     className: '',
+    id: 'aoimap-con',
     mapStyle: {
       height: '450px',
       width: '100%',
@@ -236,7 +237,7 @@ class AoiMap extends Component {
       });
     };
 
-    this.handleDeleteRegions = (e) => {
+    this.handleDelete = (e) => {
       const { onDeleteRegions, onDeleteAll, onDeletePoints } = this.props;
       switch (e.key) {
         case 'all':
@@ -252,7 +253,7 @@ class AoiMap extends Component {
     };
 
     this.handleSave = () => {
-      this.props.onSave && this.props.onSave(this.getRegions());
+      this.props.onSave && this.props.onSave(this.recountValue());
     };
 
     this.handleViewAll = () => {
@@ -261,10 +262,10 @@ class AoiMap extends Component {
   }
 
   componentDidMount() {
-    const { points, regions, backRegions, enableEditRegions, enableEditPoints, maxRegionsLen, maxPointsLen, center, onChange } = this.props;
+    const { points, regions, backRegions, enableEditRegions, enableEditPoints, maxRegionsLen, maxPointsLen, center, id, onChange } = this.props;
 
 
-    this.aoimap = new MapCircle('mapCon');
+    this.aoimap = new MapCircle(id);
     this.aoimap.drawBackPolygons(backRegions);
     this.aoimap.drawPolygons(regions, enableEditRegions);
     this.aoimap.drawMarkers(points, enableEditPoints);
@@ -301,69 +302,56 @@ class AoiMap extends Component {
    */
   recountValue() {
     return {
-      regions: AoiMap.getRegions(this.aoimap.getPolygons(), getLonlat),
-      points: AoiMap.getPoints(this.aoimap.getMarkers(), getLonlat),
+      regions: AoiMap.getRegions(this.aoimap.getPolygons(), getMercator),
+      points: AoiMap.getPoints(this.aoimap.getMarkers(), getMercator),
     };
   }
 
   render() {
-    const { mapStyle, className, regionTools, pointTools, commonTools } = this.props;
+    const { mapStyle, className, regionTools, pointTools, commonTools, id } = this.props;
     const { isRegionAdding, isPointAdding, disableAddRegions, disableAddPoints } = this.state;
     const clearMenu = (
       <Menu onClick={this.handleClear}>
         <Menu.Item key="all">全部</Menu.Item>
-        {regionTools.indexOf('clear') !== -1 ?
-          <Menu.Item key="regions"><Icon type="appstore" /> 区域</Menu.Item> : ''
-        }
-        {pointTools.indexOf('clear') !== -1 ?
-          <Menu.Item key="points"><Icon type="environment" /> 地点</Menu.Item> : ''
-        }
+        <Menu.Item key="regions" disabled={regionTools.indexOf('clear') === -1}><Icon type="appstore" /> 区域</Menu.Item>
+        <Menu.Item key="points" disabled={pointTools.indexOf('clear') === -1}><Icon type="environment" /> 地点</Menu.Item>
       </Menu>
     );
 
     const resetMenu = (
       <Menu onClick={this.handleReset}>
         <Menu.Item key="all">全部</Menu.Item>
-        {regionTools.indexOf('reset') !== -1 ?
-          <Menu.Item key="regions"><Icon type="appstore" /> 区域</Menu.Item> : ''
-        }
-        {pointTools.indexOf('reset') !== -1 ?
-          <Menu.Item key="points"><Icon type="environment" /> 地点</Menu.Item> : ''
-        }
+        <Menu.Item key="regions" disabled={regionTools.indexOf('reset') === -1}><Icon type="appstore" /> 区域</Menu.Item>
+        <Menu.Item key="points" disabled={pointTools.indexOf('reset') === -1}><Icon type="environment" /> 地点</Menu.Item>
       </Menu>
     );
 
     const deleteMenu = (
       <Menu onClick={this.handleDelete}>
         <Menu.Item key="all">全部</Menu.Item>
-        {regionTools.indexOf('delete') !== -1 ?
-          <Menu.Item key="region"><Icon type="appstore" /> 区域</Menu.Item> : ''
-        }
-        {pointTools.indexOf('delete') !== -1 ?
-          <Menu.Item key="point"><Icon type="environment" /> 地点</Menu.Item> : ''
-        }
+        <Menu.Item key="region" disabled={regionTools.indexOf('delete') === -1}><Icon type="appstore" /> 区域</Menu.Item>
+        <Menu.Item key="point" disabled={pointTools.indexOf('delete') === -1}><Icon type="environment" /> 地点</Menu.Item>
       </Menu>
     );
 
-    return (<div styleName={'wl-aoimap-con ' + className}>
-      <div styleName="wl-aoimap-toolbar">
-        {regionTools.indexOf('add') !== -1 ?
-          <Button
-            icon="plus"
-            type={isRegionAdding ? 'primary' : 'ghost'}
-            disabled={disableAddRegions}
-            onClick={this.handleAddRegion}
-          >添加区域</Button> : ''
+    return (<div className={'wl-aoimap-con ' + className}>
+      <div className="wl-aoimap-toolbar">
+        {regionTools.indexOf('add') !== -1 && <Button
+          icon="plus"
+          type={isRegionAdding ? 'primary' : 'ghost'}
+          disabled={disableAddRegions}
+          onClick={this.handleAddRegion}
+        >添加区域</Button>
         }
-        {pointTools.indexOf('add') !== -1 ?
+        {pointTools.indexOf('add') !== -1 &&
           <Button
             icon="plus"
             type={isPointAdding ? 'primary' : 'ghost'}
             disabled={disableAddPoints}
             onClick={this.handleAddPoint}
-          >添加地点</Button> : ''
+          >添加地点</Button>
         }
-        {regionTools.indexOf('clear') !== -1 || pointTools.indexOf('clear') ?
+        {regionTools.indexOf('clear') !== -1 || pointTools.indexOf('clear') !== -1 ?
           <Dropdown overlay={clearMenu}>
             <Button icon="delete" type="ghost">
               清空 ...
@@ -384,24 +372,22 @@ class AoiMap extends Component {
             </Button>
           </Dropdown> : ''
         }
-        {commonTools.indexOf('save') !== -1 ?
+        {commonTools.indexOf('save') !== -1 &&
           <Button
             type="ghost"
             icon="check"
             onClick={this.handleSave}
-          >保存</Button> : ''
+          >保存</Button>
         }
-        {commonTools.indexOf('viewAll') !== -1 ?
+        {commonTools.indexOf('viewAll') !== -1 &&
           <Button
             type="ghost"
             icon="scan"
             onClick={this.handleViewAll}
-          >视野</Button> : ''
+          >视野</Button>
         }
       </div>
-      <div id="mapCon" style={mapStyle}>{''}</div>
+      <div id={id} style={mapStyle}>{''}</div>
     </div>);
   }
 }
-
-export default CSSModules(AoiMap, styles);

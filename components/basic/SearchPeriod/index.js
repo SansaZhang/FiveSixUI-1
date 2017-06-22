@@ -11,8 +11,7 @@ import moment from 'moment';
 import { Select, Radio, DatePicker, notification } from 'antd';
 import utils from './utils';
 import { DEFAULT_DATE_FORMAT, DEFAULT_OPTIONS, DATE_TYPE, DEFAULT_MAX_INTERVAL, PARAMS_MAP } from './constant';
-import CSSModules from 'react-css-modules'; 
-import styles from './styles.less';
+import './styles.less';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -24,7 +23,7 @@ const transferDate = utils.transferDate;
 /**
  * 组件属性申明
  *
- * @property {array}         options          可选的类型              defaultValue:DEFAULT_OPTIONS
+ * @property {array}         options          可选的类型              defaultValue:['today', 'yesterday', 'tomorrow', 'lastWeek', 'lastMonth', 'customize']
  * @property {string}        defaultType      默认选中类型            defaultValue:使用options属性的第一个值
  * @property {string|array}  customizeDefault 自定义默认选中的时间段   defaultValue:使用options属性的第一个值
  * @property {string|number} dateFormat       用于请求的日期格式       defaultValue:'YYYY-MM-DD'
@@ -61,7 +60,7 @@ const propTypes = {
  * @class SearchPeriod
  * @extends {React.Component}
  */
-class SearchPeriod extends React.Component {
+export default class SearchPeriod extends React.Component {
   static defaultProps = {
     options: DEFAULT_OPTIONS,
     dateFormat: DEFAULT_DATE_FORMAT,
@@ -139,10 +138,9 @@ class SearchPeriod extends React.Component {
     const formatRange = transferDate(rangeVal, dateFormat);
     const compValue = {};
 
-    compValue[PARAMS_MAP[0]] = formatRange[0];
-    compValue[PARAMS_MAP[1]] = formatRange[1];
-
-    if (removedDates.length) {
+    if (removedDates) {
+      compValue[PARAMS_MAP[0]] = formatRange[0];
+      compValue[PARAMS_MAP[1]] = formatRange[1];
       compValue[PARAMS_MAP[2]] = removedDates;
       return compValue;
     }
@@ -155,19 +153,19 @@ class SearchPeriod extends React.Component {
    *
    * @param {date} current
    * @param {array} options
-   * @param {moment} now
+   * @param {moment} nowDate
    *
    * @return {bool} 是否是不可选日期
    *
    * @memberOf SearchPeriod
    */
-  static defaultDisabledDate(current, options, baseDate) {
+  static defaultDisabledDate(current, options, nowMoment) {
     let past = false;
     let future = false;
     let now = false;
     let isdisabled = false;
     let compareTime;
-    const curDate = moment(current.valueOf());
+    const currentMoment = moment(current.valueOf()).startOf('day').add('seconds', 1);
     const mapping = {};
 
     for (let i = 0, len = DATE_TYPE.length; i < len; i++) {
@@ -194,22 +192,22 @@ class SearchPeriod extends React.Component {
     if (past && !future) {
       // 包括今天
       if (now) {
-        compareTime = moment().endOf('day');
+        compareTime = nowMoment.endOf('day');
       } else {
-        compareTime = moment().startOf('day');
+        compareTime = nowMoment.startOf('day');
       }
-      isdisabled = current && (compareTime.isBefore(moment(current.valueOf())));
+      isdisabled = current && (currentMoment.isAfter(compareTime));
     }
 
     // 有未来无过去
     if (!past && future) {
       // 包括今天
       if (now) {
-        compareTime = moment().startOf('day');
+        compareTime = nowMoment.startOf('day');
       } else {
-        compareTime = moment().endOf('day');
+        compareTime = nowMoment.endOf('day');
       }
-      isdisabled = current && (moment(current.valueOf()).isBefore(compareTime));
+      isdisabled = current && (currentMoment.isBefore(compareTime));
     }
 
     return isdisabled;
@@ -228,7 +226,7 @@ class SearchPeriod extends React.Component {
     this.state = {
       isCustomize: props.defaultType === 'customize',
       rangeVal: SearchPeriod.getRangeValue(null, props.defaultType, props.options, props.customizeDefault),
-      removedDates: props.removeDateTool ? [] : false,
+      removedDates: props.removeDateTool ? [] : null,
     };
 
     /**
@@ -244,7 +242,7 @@ class SearchPeriod extends React.Component {
       const type = e.target.value;
       const isCustomize = (type === 'customize');
       const rangeVal = SearchPeriod.getRangeValue(type, defaultType, options, customizeDefault);
-      const removedDates = [];
+      const removedDates = this.state.removedDates ? [] : null;
 
       this.setState({ isCustomize, rangeVal, removedDates });
       onChange && onChange(SearchPeriod.recalculateValue(rangeVal, removedDates, dateFormat));
@@ -263,7 +261,7 @@ class SearchPeriod extends React.Component {
       const maxCircle = Number(maxInterval) || DEFAULT_MAX_INTERVAL;
       const maxEnd = moment(newRange[0]).add(maxCircle, 'days');
       const oldRange = this.state.rangeVal;
-      const removedDates = [];
+      const removedDates = this.state.removedDates ? [] : null;
 
       let rangeVal;
 
@@ -311,18 +309,16 @@ class SearchPeriod extends React.Component {
 
     return (
       <div>
-        { options.length === 1 && options[0] === 'customize' ? '' :
-        <RadioGroup
-          styleName="wl-searchperiod-type"
+        {options.length === 1 && options[0] === 'customize' ? '' : <RadioGroup
           className="wl-searchperiod-type"
           size="large"
           defaultValue={defaultType || options[0]}
           disabled={disabled}
           onChange={this.changeType}
         >
-          { options.map(item =>
+          {options.map(item =>
             <RadioButton key={item} value={item} >
-              { DATE_TYPE.map((type) => {
+              {DATE_TYPE.map((type) => {
                 if (type.name === item) {
                   return type.text;
                 }
@@ -338,9 +334,9 @@ class SearchPeriod extends React.Component {
           value={rangeVal}
           allowClear={allowRangeClear}
           onChange={this.changeRangeVal}
-          disabledDate={disabledDate ? cur => this.disabledDate(cur) : cur => SearchPeriod.defaultDisabledDate(cur, options, moment().startOf('day'))}
+          disabledDate={disabledDate ? cur => this.disabledDate(cur) : cur => SearchPeriod.defaultDisabledDate(cur, options, moment())}
         />
-        { removeDateTool ? <div styleName="wl-searchperiod-removedate" id="content">
+        {removeDateTool ? <div className="wl-searchperiod-removedate" id="content">
           <span>去除日期：</span>
           <Select
             multiple
@@ -352,10 +348,8 @@ class SearchPeriod extends React.Component {
           >
             {SearchPeriod.getAllDatesOption(rangeVal)}
           </Select>
-        </div> : '' }
+        </div> : ''}
       </div>
     );
   }
 }
-
-export default CSSModules(SearchPeriod, styles);
